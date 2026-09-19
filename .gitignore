@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+expenses.csv
+test_expenses.csv
+.venv/
