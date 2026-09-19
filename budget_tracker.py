@@ -151,7 +151,7 @@ def run_cli():
 
         elif choice == "5":
             category = input("Filter by category (leave blank for all): ").strip() or None
-            print(f"spent: RM {total_spent(category):.2f}")
+            print(f"Total spent: RM {total_spent(category):.2f}")
 
 
         elif choice == "6":
