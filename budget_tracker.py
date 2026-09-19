@@ -72,6 +72,15 @@ def total_spent(category=None):
     rows = list_expenses(category)
     return sum(float(r["amount"]) for r in rows)
 
+def monthly_summary():
+    """Group total spending by month (YYYY-MM)."""
+    rows = _read_all()
+    summary = {}
+    for r in rows:
+        month = r["date"][:7]  # takes "YYYY-MM" from "YYYY-MM-DD"
+        summary[month] = summary.get(month, 0) + float(r["amount"])
+    return summary
+
 
 # ---------- UPDATE ----------
 def update_expense(expense_id, **fields):
@@ -107,8 +116,8 @@ def print_menu():
     print("3. Update expense")
     print("4. Delete expense")
     print("5. Show total spent")
-    print("6. Exit")
-
+    print("6. Monthly summary")
+    print("7. Exit")
 
 def run_cli():
     init_file()
@@ -145,9 +154,12 @@ def run_cli():
             print(f"Total spent: {total_spent(category):.2f}")
 
         elif choice == "6":
+            for month, total in sorted(monthly_summary().items()):
+                print(f"{month}: {total:.2f}")
+
+        elif choice == "7":
             print("Goodbye!")
             break
-
         else:
             print("Invalid option, try again.")
 
